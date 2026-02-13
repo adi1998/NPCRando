@@ -1,0 +1,49 @@
+[config]
+schemaVersion = "0.0.1"
+
+
+[package]
+namespace = "zerp"
+name = "NPCRando"
+versionNumber = "0.2.1"
+description = "Adds new Chaos Trials which let you traverse the biomes from all available routes in a random order. Configurable to set run length and a custom biome order. Compatible with new biomes added in Zagreus' Journey."
+websiteUrl = "https://github.com/adi1998/NPCRando"
+containsNsfwContent = false
+
+[package.dependencies]
+Hell2Modding-Hell2Modding = "1.0.88"
+LuaENVY-ENVY = "1.2.0"
+SGG_Modding-Chalk = "2.1.1"
+SGG_Modding-ReLoad = "1.0.2"
+SGG_Modding-SJSON = "1.0.0"
+SGG_Modding-ModUtil = "4.0.1"
+Siuhnexus-BountyAPI = "1.0.1"
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "./build"
+
+[[build.copy]]
+source = "./CHANGELOG.md"
+target = "./CHANGELOG.md"
+
+[[build.copy]]
+source = "./LICENSE"
+target = "./LICENSE"
+
+[[build.copy]]
+source = "./src"
+target = "./plugins"
+
+# Uncomment (remove the #) the three lines below if you have any files to copy to the plugins_data folder (like custom .pkg files)
+# [[build.copy]]
+# source = "./data"
+# target = "./plugins_data"
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "hades-ii", ]
+
+[publish.categories]
+hades-ii = [ "mods", ]
