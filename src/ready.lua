@@ -20,6 +20,12 @@ local storyRooms = {
     "H_Bridge01",
     "I_Story01",
 
+	"N_Story01",
+	"N_Story01",
+	"N_Story01",
+	"N_Story01",
+	"N_Story01",
+
     "O_Story01",
     "P_Story01",
 }
@@ -133,6 +139,10 @@ mod.RoomSets =
 		"I_Combat24",
 	},
 
+	N = {
+		"N_Hub"
+	},
+
 	O =
 	{
 		"O_Combat01",
@@ -192,7 +202,7 @@ function mod.SelectRandomStoryRoom()
             table.insert(unusedStoryRooms, storyRoom)
         end
     end
-    return unusedStoryRooms[math.random(#unusedStoryRooms)]
+    return unusedStoryRooms[math.random(1, #unusedStoryRooms)]
 end
 
 modutil.mod.Path.Wrap("OlympusSkyExitPresentation", function (base, currentRun, exitDoor)
@@ -211,16 +221,16 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 
     local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
     print(currentBiome)
-    if currentBiome then
+    if currentBiome and args.ForceNextRoomSet == nil then
         args.ForceNextRoomSet = currentBiome
-		if not currentBiome.CurrentRoom[_PLUGIN.guid .. "SkipBiomeCleanup"] then
+		if not currentRun.CurrentRoom[_PLUGIN.guid .. "SkipBiomeCleanup"] then
 			game.CurrentRun.BiomesReached[currentRun.CurrentRoom.RoomSetName] = nil
 		end
         if currentRun.CurrentRoom.RoomSetName ~= currentBiome then
             game.CurrentRun.RoomCreations[currentRun.CurrentRoom.Name] = 0
         end
         local currentBiomeCombatRooms = mod.RoomSets[currentBiome]
-        local nextRoomData = game.RoomData[currentBiomeCombatRooms[#currentBiomeCombatRooms]]
+        local nextRoomData = game.RoomData[currentBiomeCombatRooms[math.random(1, #currentBiomeCombatRooms)]]
 		print("linked", currentRun.CurrentRoom.Name, "to", nextRoomData.Name)
         return nextRoomData
     end
@@ -237,4 +247,42 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
         print("swapped", origStoryRoom, "with", nextRoomData.Name)
     end
     return nextRoomData
+end)
+
+modutil.mod.Path.Wrap("AttemptUseDoor", function (base, door, args)
+	args = args or {}
+	if not (not door.ReadyToUse or not game.CheckRoomExitsReady( game.CurrentRun.CurrentRoom ) or game.CheckSpecialDoorRequirement( door ) ~= nil) and (not door.InUse) then
+		local currentRun = game.CurrentRun
+		local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
+		if currentBiome == "N" then
+			door.ReturnToPreviousRoomName = "N_Hub"
+			if not currentRun.CurrentRoom[_PLUGIN.guid .. "SkipBiomeCleanup"] then
+				game.CurrentRun.BiomesReached[currentRun.CurrentRoom.RoomSetName] = nil
+			end
+			if currentRun.CurrentRoom.RoomSetName ~= currentBiome then
+				game.CurrentRun.RoomCreations[currentRun.CurrentRoom.Name] = 0
+			end
+			print("linked", currentRun.CurrentRoom.Name, "to N_Hub")
+		elseif currentBiome and currentBiome ~= "N" and currentRun.CurrentRoom.Name == "N_Story01" then
+			door.ReturnToPreviousRoomName = nil
+			door.NextRoomEntranceFunctionName = nil
+		end
+	end
+	base(door, args)
+end)
+
+modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
+    if currentRun.CurrentRoom.Name == "N_Hub" and door.Room.Name == "N_Story01" then
+        local origStoryRoom = "N_Story01"
+        game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
+        door.Room = game.CreateRoom(game.RoomData[mod.SelectRandomStoryRoom()])
+        door.Room[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
+        game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][door.Room.Name] = true
+		if game.CurrentRun.BiomesReached[door.Room.RoomSetName] then
+			door.Room[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
+		end
+		print("swapped", origStoryRoom, "with", door.Room.Name)
+    end
+
+    return base(currentRun, door)
 end)
