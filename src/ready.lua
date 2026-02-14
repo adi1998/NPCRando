@@ -21,11 +21,6 @@ local storyRooms = {
     "I_Story01",
 
 	"N_Story01",
-	"N_Story01",
-	"N_Story01",
-	"N_Story01",
-	"N_Story01",
-
     "O_Story01",
     "P_Story01",
 }
@@ -261,6 +256,7 @@ modutil.mod.Path.Wrap("AttemptUseDoor", function (base, door, args)
 			end
 			if currentRun.CurrentRoom.RoomSetName ~= currentBiome then
 				game.CurrentRun.RoomCreations[currentRun.CurrentRoom.Name] = 0
+				game.CurrentRun.SpawnRecord.SoulPylon = (game.CurrentRun.SpawnRecord.SoulPylon or 0) + 1
 			end
 			print("linked", currentRun.CurrentRoom.Name, "to N_Hub")
 		elseif currentBiome and currentBiome ~= "N" and currentRun.CurrentRoom.Name == "N_Story01" then
@@ -283,6 +279,10 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 		end
 		print("swapped", origStoryRoom, "with", door.Room.Name)
     end
-
+	local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
+	if currentBiome and currentBiome ~= "N" and currentRun.CurrentRoom.Name == "N_Story01" then
+		game.CurrentRun.CurrentRoom.NextHeroStartPoint = nil
+		game.CurrentRun.CurrentRoom.NextHeroEndPoint = nil
+	end
     return base(currentRun, door)
 end)
