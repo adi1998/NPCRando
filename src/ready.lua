@@ -181,6 +181,8 @@ mod.RoomSets =
 	},
 }
 
+mod.RoomSets.Anomaly = mod.RoomSets.G
+
 game.RoomData["H_PreBoss01"].GameStateRequirements = {}
 game.RoomData["H_PreBoss01"].ForceAtBiomeDepth = 5
 
@@ -225,6 +227,13 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
             game.CurrentRun.RoomCreations[currentRun.CurrentRoom.Name] = 0
         end
         local currentBiomeCombatRooms = mod.RoomSets[currentBiome]
+		if not currentBiomeCombatRooms then
+			print("previous room biome not valid, getting RoomSet from room n-2")
+			local prevRoomIndex = game.TableLength( currentRun.RoomHistory ) - 1
+			currentBiome = currentRun.RoomHistory[prevRoomIndex].RoomSetName
+			print(currentBiome)
+			currentBiomeCombatRooms = mod.RoomSets[currentBiome]
+		end
         local nextRoomData = game.RoomData[currentBiomeCombatRooms[math.random(1, #currentBiomeCombatRooms)]]
 		print("linked", currentRun.CurrentRoom.Name, "to", nextRoomData.Name)
         return nextRoomData
