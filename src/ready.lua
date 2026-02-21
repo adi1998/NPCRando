@@ -25,6 +25,16 @@ local storyRooms = {
     "P_Story01",
 }
 
+local zagStoryRooms = {
+	"A_Story01",
+	"X_Story01",
+	"Y_Story01",
+}
+
+if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].config and rom.mods["NikkelM-Zagreus_Journey"].config.enabled then
+	game.ConcatTableValuesIPairs(storyRooms, zagStoryRooms)
+end
+
 mod.RoomSets =
 {
 	F =
@@ -183,6 +193,68 @@ mod.RoomSets =
 
 mod.RoomSets.Anomaly = mod.RoomSets.G
 
+mod.ZagRoomSets = {
+	Tartarus = {
+		"A_Combat01",
+		"A_Combat02",
+		"A_Combat03",
+		"A_Combat04",
+		"A_Combat05",
+		"A_Combat06",
+		"A_Combat07",
+		"A_Combat08A",
+		"A_Combat08B",
+		"A_Combat09",
+		"A_Combat10",
+		"A_Combat11",
+		"A_Combat12",
+		"A_Combat13",
+		"A_Combat14",
+		"A_Combat15",
+		"A_Combat16",
+		"A_Combat17",
+		"A_Combat18",
+		"A_Combat19",
+		"A_Combat20",
+		"A_Combat21",
+		"A_Combat24",
+	},
+	Asphodel = {
+		"X_Combat01",
+		"X_Combat02",
+		"X_Combat03",
+		"X_Combat04",
+		"X_Combat05",
+		"X_Combat06",
+		"X_Combat07",
+		"X_Combat08",
+		"X_Combat09",
+		"X_Combat10",
+		"X_Combat21",
+		"X_Combat22",
+	},
+	Elysium = {
+		"Y_Combat01",
+		"Y_Combat02",
+		"Y_Combat03",
+		"Y_Combat04",
+		"Y_Combat05",
+		"Y_Combat06",
+		"Y_Combat08",
+		"Y_Combat09",
+		"Y_Combat10",
+		"Y_Combat11",
+		"Y_Combat12",
+		"Y_Combat13",
+		"Y_Combat14",
+	},
+}
+
+if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].config and rom.mods["NikkelM-Zagreus_Journey"].config.enabled then
+	game.OverwriteTableKeys(mod.RoomSets, mod.ZagRoomSets)
+end
+
+
 game.RoomData["H_PreBoss01"].GameStateRequirements = {}
 game.RoomData["H_PreBoss01"].ForceAtBiomeDepth = 5
 
@@ -236,6 +308,11 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 		end
         local nextRoomData = game.RoomData[currentBiomeCombatRooms[math.random(1, #currentBiomeCombatRooms)]]
 		print("linked", currentRun.CurrentRoom.Name, "to", nextRoomData.Name)
+		if mod.ZagRoomSets[currentBiome] then
+			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
+		else
+			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
+		end
         return nextRoomData
     end
     local nextRoomData = base(currentRun, args, otherDoors)
@@ -249,6 +326,11 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 			nextRoomData[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
 		end
         print("swapped", origStoryRoom, "with", nextRoomData.Name)
+		if game.Contains(zagStoryRooms, nextRoomData.Name) then
+			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
+		else
+			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
+		end
     end
     return nextRoomData
 end)
@@ -268,6 +350,7 @@ modutil.mod.Path.Wrap("AttemptUseDoor", function (base, door, args)
 				game.CurrentRun.SpawnRecord.SoulPylon = (game.CurrentRun.SpawnRecord.SoulPylon or 0) + 1
 			end
 			print("linked", currentRun.CurrentRoom.Name, "to N_Hub")
+			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 		elseif currentBiome and currentBiome ~= "N" and currentRun.CurrentRoom.Name == "N_Story01" then
 			door.ReturnToPreviousRoomName = nil
 			door.NextRoomEntranceFunctionName = nil
@@ -286,6 +369,11 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 		if game.CurrentRun.BiomesReached[door.Room.RoomSetName] then
 			door.Room[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
 		end
+		if game.Contains(zagStoryRooms, door.Room.Name) then
+			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
+		else
+			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
+		end
 		print("swapped", origStoryRoom, "with", door.Room.Name)
     end
 	local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
@@ -295,3 +383,17 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 	end
     return base(currentRun, door)
 end)
+
+if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].config and rom.mods["NikkelM-Zagreus_Journey"].config.enabled then
+	modutil.mod.Path.Wrap("LoadCurrentRoomResources", function (base, ...)
+		game.LoadPackages({ Names = { "ModsNikkelMHadesBiomesGUIOriginal" } })
+		base(...)
+	end)
+
+	modutil.mod.Path.Wrap("SetupClockworkGoalReward", function (base, rewardData, currentRoom, room, previouslyChosenRewards, args, setupFunctionArgs)
+		base(rewardData, currentRoom, room, previouslyChosenRewards, args, setupFunctionArgs)
+		if not game.Contains({"HadesLockIcon", "ShopPreview"}, room.RewardPreviewOverride) then
+			room.RewardPreviewOverride = "ClockworkCountdown"..(game.CurrentRun.RemainingClockworkGoals or 0)
+		end
+	end)
+end
