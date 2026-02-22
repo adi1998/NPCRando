@@ -326,11 +326,11 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 			nextRoomData[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
 		end
         print("swapped", origStoryRoom, "with", nextRoomData.Name)
-		if game.Contains(zagStoryRooms, nextRoomData.Name) then
-			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
-		else
-			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
-		end
+		-- if game.Contains(zagStoryRooms, nextRoomData.Name) then
+		-- 	game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
+		-- else
+		-- 	game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
+		-- end
     end
     return nextRoomData
 end)
@@ -380,6 +380,11 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 	if currentBiome and currentBiome ~= "N" and currentRun.CurrentRoom.Name == "N_Story01" then
 		game.CurrentRun.CurrentRoom.NextHeroStartPoint = nil
 		game.CurrentRun.CurrentRoom.NextHeroEndPoint = nil
+	end
+	if game.Contains(zagStoryRooms, door.Room.Name) then
+		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
+	else
+		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 	end
     return base(currentRun, door)
 end)
