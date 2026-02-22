@@ -5,8 +5,8 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "zerp"
 name = "NPCRando"
-versionNumber = "0.2.1"
-description = "Adds new Chaos Trials which let you traverse the biomes from all available routes in a random order. Configurable to set run length and a custom biome order. Compatible with new biomes added in Zagreus' Journey."
+versionNumber = "0.0.1"
+description = "Randomizes NPC story rooms between each other. Compatible with Zagreus' Journey."
 websiteUrl = "https://github.com/adi1998/NPCRando"
 containsNsfwContent = false
 

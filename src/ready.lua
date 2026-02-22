@@ -326,11 +326,6 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 			nextRoomData[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
 		end
         print("swapped", origStoryRoom, "with", nextRoomData.Name)
-		-- if game.Contains(zagStoryRooms, nextRoomData.Name) then
-		-- 	game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
-		-- else
-		-- 	game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
-		-- end
     end
     return nextRoomData
 end)

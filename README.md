@@ -1,6 +1,6 @@
 ## NPC Room Randomizer
 
-
+Randomizes NPC story rooms between each other.
 
 ## Issues and feedback
 
