@@ -284,21 +284,21 @@ modutil.mod.Path.Wrap("OlympusSkyExitPresentation", function (base, currentRun, 
 end)
 
 modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, otherDoors)
-    args = args or {}
-    game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"] = game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"] or {}
-    game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"] = game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"] or {}
+	args = args or {}
+	game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"] = game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"] or {}
+	game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"] = game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"] or {}
 
-    local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
-    print(currentBiome)
-    if currentBiome and args.ForceNextRoomSet == nil then
-        args.ForceNextRoomSet = currentBiome
+	local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
+	print(currentBiome)
+	if currentBiome and args.ForceNextRoomSet == nil then
+		args.ForceNextRoomSet = currentBiome
 		if not currentRun.CurrentRoom[_PLUGIN.guid .. "SkipBiomeCleanup"] then
 			game.CurrentRun.BiomesReached[currentRun.CurrentRoom.RoomSetName] = nil
 		end
-        if currentRun.CurrentRoom.RoomSetName ~= currentBiome then
-            game.CurrentRun.RoomCreations[currentRun.CurrentRoom.Name] = 0
-        end
-        local currentBiomeCombatRooms = mod.RoomSets[currentBiome]
+		if currentRun.CurrentRoom.RoomSetName ~= currentBiome then
+			game.CurrentRun.RoomCreations[currentRun.CurrentRoom.Name] = 0
+		end
+		local currentBiomeCombatRooms = mod.RoomSets[currentBiome]
 		if not currentBiomeCombatRooms then
 			print("previous room biome not valid, getting RoomSet from room n-2")
 			local prevRoomIndex = game.TableLength( currentRun.RoomHistory ) - 1
@@ -306,29 +306,33 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 			print(currentBiome)
 			currentBiomeCombatRooms = mod.RoomSets[currentBiome]
 		end
-        local nextRoomData = game.RoomData[currentBiomeCombatRooms[math.random(1, #currentBiomeCombatRooms)]]
+		local nextRoomData = game.RoomData[currentBiomeCombatRooms[math.random(1, #currentBiomeCombatRooms)]]
 		print("linked", currentRun.CurrentRoom.Name, "to", nextRoomData.Name)
+		if currentBiome == "H" and currentRun.CurrentRoom.Name ~= "H_Bridge01" then
+			currentRun.CurrentRoom.NumDoorCageRewards = (game.RandomChance(0.8) and 3) or 2
+		end
 		if mod.ZagRoomSets[currentBiome] then
 			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
 		else
 			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 		end
-        return nextRoomData
-    end
-    local nextRoomData = base(currentRun, args, otherDoors)
-    if game.Contains(storyRooms, nextRoomData.Name) then
-        local origStoryRoom = nextRoomData.Name
-        game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
-        nextRoomData = game.RoomData[mod.SelectRandomStoryRoom()]
-        nextRoomData[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
-        game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][nextRoomData.Name] = true
+		return nextRoomData
+	end
+	local nextRoomData = base(currentRun, args, otherDoors)
+	if game.Contains(storyRooms, nextRoomData.Name) then
+		local origStoryRoom = nextRoomData.Name
+		game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
+		nextRoomData = game.RoomData[mod.SelectRandomStoryRoom()]
+		nextRoomData[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
+		game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][nextRoomData.Name] = true
 		if game.CurrentRun.BiomesReached[nextRoomData.RoomSetName] then
 			nextRoomData[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
 		end
-        print("swapped", origStoryRoom, "with", nextRoomData.Name)
-    end
-    return nextRoomData
+		print("swapped", origStoryRoom, "with", nextRoomData.Name)
+	end
+	return nextRoomData
 end)
+
 
 modutil.mod.Path.Wrap("AttemptUseDoor", function (base, door, args)
 	args = args or {}
