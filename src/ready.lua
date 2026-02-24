@@ -271,6 +271,7 @@ function mod.SelectRandomStoryRoom()
             table.insert(unusedStoryRooms, storyRoom)
         end
     end
+	print("available story rooms", mod.dump(unusedStoryRooms))
     return unusedStoryRooms[math.random(1, #unusedStoryRooms)]
 end
 
@@ -280,6 +281,7 @@ modutil.mod.Path.Wrap("OlympusSkyExitPresentation", function (base, currentRun, 
     if currentBiome ~= "P" and currentRun.CurrentRoom.Name == "P_Story01" then
         game.CurrentRun.CurrentRoom.NextRoomEntranceFunctionNameOverride = nil
 	    game.CurrentRun.CurrentRoom.NextRoomEntranceFunctionArgsOverride = nil
+		print("resetting NextRoomEntranceFunctionNameOverride for exit to", ((exitDoor or {}).Room or {}).Name)
     end
 end)
 
@@ -293,23 +295,26 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 	if currentBiome and args.ForceNextRoomSet == nil then
 		args.ForceNextRoomSet = currentBiome
 		if not currentRun.CurrentRoom[_PLUGIN.guid .. "SkipBiomeCleanup"] then
+			print("removing", currentRun.CurrentRoom.RoomSetName, "from BiomesReached")
 			game.CurrentRun.BiomesReached[currentRun.CurrentRoom.RoomSetName] = nil
 		end
 		if currentRun.CurrentRoom.RoomSetName ~= currentBiome then
+			print("resetting RoomCreations for", currentRun.CurrentRoom.Name, "while linking back to current biome", currentBiome)
 			game.CurrentRun.RoomCreations[currentRun.CurrentRoom.Name] = 0
 		end
 		local currentBiomeCombatRooms = mod.RoomSets[currentBiome]
 		if not currentBiomeCombatRooms then
-			print("previous room biome not valid, getting RoomSet from room n-2")
+			print("previous room biome not valid:", currentBiome , ", getting RoomSetName from room n-2")
 			local prevRoomIndex = game.TableLength( currentRun.RoomHistory ) - 1
 			currentBiome = currentRun.RoomHistory[prevRoomIndex].RoomSetName
-			print(currentBiome)
+			print("new currentBiome", currentBiome)
 			currentBiomeCombatRooms = mod.RoomSets[currentBiome]
 		end
 		local nextRoomData = game.RoomData[currentBiomeCombatRooms[math.random(1, #currentBiomeCombatRooms)]]
 		print("linked", currentRun.CurrentRoom.Name, "to", nextRoomData.Name)
 		if currentBiome == "H" and currentRun.CurrentRoom.Name ~= "H_Bridge01" then
-			currentRun.CurrentRoom.NumDoorCageRewards = (game.RandomChance(0.8) and 3) or 2
+			currentRun.CurrentRoom.NumDoorCageRewards = (game.RandomChance(0.8) and math.min(3, nextRoomData.MaxCageRewards or 3)) or 2
+			print("setting up NumDoorCageRewards", currentRun.CurrentRoom.NumDoorCageRewards)
 		end
 		if mod.ZagRoomSets[currentBiome] then
 			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
@@ -333,6 +338,14 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 	return nextRoomData
 end)
 
+modutil.mod.Path.Wrap("CreateRoom", function (base, roomData, args)
+	local room = base(roomData, args)
+	if game.Contains(storyRooms, room.Name) and room[_PLUGIN.guid .. "CurrentBiome"] then
+		print("Resetting RoomCreations for", room.Name, "after room creation")
+		game.CurrentRun.RoomCreations[room.Name] = 0
+	end
+	return room
+end)
 
 modutil.mod.Path.Wrap("AttemptUseDoor", function (base, door, args)
 	args = args or {}
@@ -345,14 +358,17 @@ modutil.mod.Path.Wrap("AttemptUseDoor", function (base, door, args)
 				game.CurrentRun.BiomesReached[currentRun.CurrentRoom.RoomSetName] = nil
 			end
 			if currentRun.CurrentRoom.RoomSetName ~= currentBiome then
+				print("resetting RoomCreations for", currentRun.CurrentRoom.Name, "while linking back to current biome", currentBiome)
 				game.CurrentRun.RoomCreations[currentRun.CurrentRoom.Name] = 0
 				game.CurrentRun.SpawnRecord.SoulPylon = (game.CurrentRun.SpawnRecord.SoulPylon or 0) + 1
+				print("increasing destroyed SoulPylon count to", game.CurrentRun.SpawnRecord.SoulPylon)
 			end
 			print("linked", currentRun.CurrentRoom.Name, "to N_Hub")
 			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 		elseif currentBiome and currentBiome ~= "N" and currentRun.CurrentRoom.Name == "N_Story01" then
 			door.ReturnToPreviousRoomName = nil
 			door.NextRoomEntranceFunctionName = nil
+			print("resetting ReturnToPreviousRoomName and NextRoomEntranceFunctionName while exiting to", currentBiome, "from", currentRun.CurrentRoom.Name)
 		end
 	end
 	base(door, args)
@@ -374,6 +390,7 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 	if currentBiome and currentBiome ~= "N" and currentRun.CurrentRoom.Name == "N_Story01" then
 		game.CurrentRun.CurrentRoom.NextHeroStartPoint = nil
 		game.CurrentRun.CurrentRoom.NextHeroEndPoint = nil
+		print("resetting NextHeroStartPoint and NextHeroEndPoint while exiting to", currentBiome, "from", currentRun.CurrentRoom.Name)
 	end
 	if door.Room[_PLUGIN.guid .. "CurrentBiome"] and game.Contains(zagStoryRooms, door.Room.Name) then
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
@@ -392,7 +409,9 @@ if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].c
 	modutil.mod.Path.Wrap("SetupClockworkGoalReward", function (base, rewardData, currentRoom, room, previouslyChosenRewards, args, setupFunctionArgs)
 		base(rewardData, currentRoom, room, previouslyChosenRewards, args, setupFunctionArgs)
 		if not game.Contains({"HadesLockIcon", "ShopPreview"}, room.RewardPreviewOverride) then
+			print("unexpected RewardPreviewOverride found", room.RewardPreviewOverride)
 			room.RewardPreviewOverride = "ClockworkCountdown"..(game.CurrentRun.RemainingClockworkGoals or 0)
+			print("replacing with", room.RewardPreviewOverride)
 		end
 	end)
 end
