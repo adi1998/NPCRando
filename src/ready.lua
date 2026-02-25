@@ -264,10 +264,10 @@ for _, storyRoom in ipairs(storyRooms) do
     })
 end
 
-function mod.SelectRandomStoryRoom()
+function mod.SelectRandomStoryRoom(origStoryRoom)
     local unusedStoryRooms = {}
     for _, storyRoom in ipairs(storyRooms) do
-        if not game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][storyRoom] then
+        if not game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][storyRoom] and ( (not config.never_default) or origStoryRoom == storyRoom ) then
             table.insert(unusedStoryRooms, storyRoom)
         end
     end
@@ -327,7 +327,7 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 	if game.Contains(storyRooms, nextRoomData.Name) then
 		local origStoryRoom = nextRoomData.Name
 		game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
-		nextRoomData = game.RoomData[mod.SelectRandomStoryRoom()]
+		nextRoomData = game.RoomData[mod.SelectRandomStoryRoom(origStoryRoom)]
 		nextRoomData[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
 		game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][nextRoomData.Name] = true
 		if game.CurrentRun.BiomesReached[nextRoomData.RoomSetName] then
