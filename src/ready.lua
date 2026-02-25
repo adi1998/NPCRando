@@ -327,13 +327,26 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 	if game.Contains(storyRooms, nextRoomData.Name) then
 		local origStoryRoom = nextRoomData.Name
 		game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
-		nextRoomData = game.RoomData[mod.SelectRandomStoryRoom(origStoryRoom)]
+		nextRoomData = game.DeepCopyTable(game.RoomData[mod.SelectRandomStoryRoom(origStoryRoom)])
 		nextRoomData[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
 		game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][nextRoomData.Name] = true
 		if game.CurrentRun.BiomesReached[nextRoomData.RoomSetName] then
 			nextRoomData[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
 		end
 		print("swapped", origStoryRoom, "with", nextRoomData.Name)
+	end
+	if currentBiome and (args.ForceNextRoomSet or nextRoomData.UsePreviousRoomSet) then
+		print("story to secret biome transition detected,", "args.ForceNextRoomSet:", args.ForceNextRoomSet, ", nextRoomData.UsePreviousRoomSet:", nextRoomData.UsePreviousRoomSet)
+		nextRoomData = game.DeepCopyTable(nextRoomData)
+		local currentBiomeCombatRooms = mod.RoomSets[currentBiome]
+		if not currentBiomeCombatRooms then
+			print("previous room biome not valid:", currentBiome , ", getting RoomSetName from room n-2")
+			local prevRoomIndex = game.TableLength( currentRun.RoomHistory ) - 1
+			currentBiome = currentRun.RoomHistory[prevRoomIndex].RoomSetName
+			print("new currentBiome", currentBiome)
+		end
+		print("applied NextRoomSet for room", nextRoomData.Name)
+		nextRoomData.NextRoomSet = { currentBiome }
 	end
 	return nextRoomData
 end)

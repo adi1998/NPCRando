@@ -1,4 +1,4 @@
----@meta zerp-NPCRando
+---@meta zerp-NPCRoomRandomizer
 local public = {}
 
 -- document whatever you made publicly available to other plugins here
