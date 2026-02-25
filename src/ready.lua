@@ -278,7 +278,7 @@ end
 modutil.mod.Path.Wrap("OlympusSkyExitPresentation", function (base, currentRun, exitDoor)
     local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
     base(currentRun, exitDoor)
-    if currentBiome ~= "P" and currentRun.CurrentRoom.Name == "P_Story01" then
+    if currentBiome and currentBiome ~= "P" and currentRun.CurrentRoom.Name == "P_Story01" then
         game.CurrentRun.CurrentRoom.NextRoomEntranceFunctionNameOverride = nil
 	    game.CurrentRun.CurrentRoom.NextRoomEntranceFunctionArgsOverride = nil
 		print("resetting NextRoomEntranceFunctionNameOverride for exit to", ((exitDoor or {}).Room or {}).Name)
@@ -291,7 +291,7 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 	game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"] = game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"] or {}
 
 	local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
-	print(currentBiome)
+	print("CurrentRoom[_PLUGIN.guid .. \"CurrentBiome\"]", currentBiome)
 	if currentBiome and args.ForceNextRoomSet == nil then
 		args.ForceNextRoomSet = currentBiome
 		if not currentRun.CurrentRoom[_PLUGIN.guid .. "SkipBiomeCleanup"] then
