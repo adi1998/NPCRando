@@ -332,6 +332,7 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 		game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][nextRoomData.Name] = true
 		if game.CurrentRun.BiomesReached[nextRoomData.RoomSetName] then
 			nextRoomData[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
+			print("skipping BiomesReached cleanup for", nextRoomData.RoomSetName)
 		end
 		print("swapped", origStoryRoom, "with", nextRoomData.Name)
 	end
@@ -368,6 +369,7 @@ modutil.mod.Path.Wrap("AttemptUseDoor", function (base, door, args)
 		if currentBiome == "N" then
 			door.ReturnToPreviousRoomName = "N_Hub"
 			if not currentRun.CurrentRoom[_PLUGIN.guid .. "SkipBiomeCleanup"] then
+				print("cleaning up BiomesReached", currentRun.CurrentRoom.RoomSetName)
 				game.CurrentRun.BiomesReached[currentRun.CurrentRoom.RoomSetName] = nil
 			end
 			if currentRun.CurrentRoom.RoomSetName ~= currentBiome then
@@ -396,6 +398,7 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
         game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][door.Room.Name] = true
 		if game.CurrentRun.BiomesReached[door.Room.RoomSetName] then
 			door.Room[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
+			print("skipping BiomesReached cleanup for", door.Room.RoomSetName)
 		end
 		print("swapped", origStoryRoom, "with", door.Room.Name)
     end
