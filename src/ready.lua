@@ -272,7 +272,9 @@ function mod.SelectRandomStoryRoom(origStoryRoom)
         end
     end
 	print("available story rooms", mod.dump(unusedStoryRooms))
-    return unusedStoryRooms[math.random(1, #unusedStoryRooms)]
+	local retval = unusedStoryRooms[math.random(1, #unusedStoryRooms)]
+	print("Selected", retval)
+    return retval
 end
 
 modutil.mod.Path.Wrap("OlympusSkyExitPresentation", function (base, currentRun, exitDoor)
@@ -393,7 +395,9 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
     if currentRun.CurrentRoom.Name == "N_Hub" and door.Room.Name == "N_Story01" then
         local origStoryRoom = "N_Story01"
         game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
-        door.Room = game.CreateRoom(game.RoomData[mod.SelectRandomStoryRoom()])
+		local roomData = game.DeepCopyTable(game.RoomData[mod.SelectRandomStoryRoom()])
+		roomData.ChosenRewardType = "Story"
+        door.Room = game.CreateRoom(roomData)
         door.Room[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
         game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][door.Room.Name] = true
 		if game.CurrentRun.BiomesReached[door.Room.RoomSetName] then
