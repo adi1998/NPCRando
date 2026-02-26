@@ -191,8 +191,6 @@ mod.RoomSets =
 	},
 }
 
-mod.RoomSets.Anomaly = mod.RoomSets.G
-
 mod.ZagRoomSets = {
 	Tartarus = {
 		"A_Combat01",
