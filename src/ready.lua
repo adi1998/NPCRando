@@ -334,6 +334,13 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 			nextRoomData[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
 			print("skipping BiomesReached cleanup for", nextRoomData.RoomSetName)
 		end
+		if game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun then
+			nextRoomData.RewardPreviewOverride = "ModsNikkelMHadesBiomes_StoryPreview"
+		else
+			nextRoomData.RewardPreviewOverride = "StoryPreview"
+		end
+		nextRoomData.SecretSpawnChance = 0
+		nextRoomData.ShrinePointDoorSpawnChance = 0
 		print("swapped", origStoryRoom, "with", nextRoomData.Name)
 	end
 	if currentBiome and (args.ForceNextRoomSet or nextRoomData.UsePreviousRoomSet) then
@@ -402,6 +409,8 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 			door.Room[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
 			print("skipping BiomesReached cleanup for", door.Room.RoomSetName)
 		end
+		door.Room.SecretSpawnChance = 0
+		door.Room.ShrinePointDoorSpawnChance = 0
 		print("swapped", origStoryRoom, "with", door.Room.Name)
     end
 	local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
