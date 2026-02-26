@@ -340,7 +340,9 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 			nextRoomData.RewardPreviewOverride = "StoryPreview"
 		end
 		nextRoomData.SecretSpawnChance = 0
+		nextRoomData.SecretChanceSuccess = false
 		nextRoomData.ShrinePointDoorSpawnChance = 0
+		nextRoomData.ShrinePointDoorChanceSuccess = false
 		print("swapped", origStoryRoom, "with", nextRoomData.Name)
 	end
 	if currentBiome and (args.ForceNextRoomSet or nextRoomData.UsePreviousRoomSet) then
@@ -411,6 +413,8 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 		end
 		door.Room.SecretSpawnChance = 0
 		door.Room.ShrinePointDoorSpawnChance = 0
+		door.Room.SecretChanceSuccess = false
+		door.Room.ShrinePointDoorChanceSuccess = false
 		print("swapped", origStoryRoom, "with", door.Room.Name)
     end
 	local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
