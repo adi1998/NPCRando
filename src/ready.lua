@@ -409,6 +409,12 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 		game.CurrentRun.CurrentRoom.NextHeroStartPoint = nil
 		game.CurrentRun.CurrentRoom.NextHeroEndPoint = nil
 		print("resetting NextHeroStartPoint and NextHeroEndPoint while exiting to", currentBiome, "from", currentRun.CurrentRoom.Name)
+
+		print("current SoulPylon SpawnRecord", game.CurrentRun.SpawnRecord.SoulPylon)
+		game.CurrentRun.SpawnRecord.SoulPylon = (game.CurrentRun.SpawnRecord.SoulPylon or 1) - 1
+		print("resetting SoulPylon SpawnRecord to", game.CurrentRun.SpawnRecord.SoulPylon)
+		game.CurrentRun.RoomsEntered[currentRun.CurrentRoom.Name] = nil
+		print("resetting CurrentRun.RoomsEntered for", currentRun.CurrentRoom.Name)
 	end
 	if door.Room[_PLUGIN.guid .. "CurrentBiome"] and game.Contains(zagStoryRooms, door.Room.Name) then
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
