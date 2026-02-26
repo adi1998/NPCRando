@@ -5,7 +5,7 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "zerp"
 name = "NPCRoomRandomizer"
-versionNumber = "0.0.1"
+versionNumber = "0.1.0"
 description = "Randomizes NPC story rooms between each other."
 websiteUrl = "https://github.com/adi1998/NPCRando"
 containsNsfwContent = false
