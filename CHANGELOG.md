@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- story room previews now use the original preview
+- any secret doors or anomalies are blocked in story rooms
+- better handling of Soul Pylons during Medea room
+
 ## [0.1.0] - 2026-02-26
 
 - First version of the mod
