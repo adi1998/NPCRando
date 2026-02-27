@@ -265,7 +265,7 @@ end
 function mod.SelectRandomStoryRoom(origStoryRoom)
     local unusedStoryRooms = {}
     for _, storyRoom in ipairs(storyRooms) do
-        if not game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][storyRoom] and ( (not config.never_default) or origStoryRoom == storyRoom ) then
+        if not game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][storyRoom] and ( (not config.never_default) or origStoryRoom ~= storyRoom ) then
             table.insert(unusedStoryRooms, storyRoom)
         end
     end
