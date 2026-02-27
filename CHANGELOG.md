@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - story room previews now use the original preview
+- fix reward previews for story room to Thessely transitions
 - any secret doors or anomalies are blocked in story rooms
 - better handling of Soul Pylons during Medea room
 
