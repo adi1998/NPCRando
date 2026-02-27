@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- fix Thessely reward previews after story room
+- fix Thessely room orientation in some cases
+
 ## [0.2.0] - 2026-02-27
 
 - story room previews now use the original preview
