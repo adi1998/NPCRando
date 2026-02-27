@@ -310,11 +310,14 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 			print("new currentBiome", currentBiome)
 			currentBiomeCombatRooms = mod.RoomSets[currentBiome]
 		end
-		local nextRoomData = game.RoomData[currentBiomeCombatRooms[math.random(1, #currentBiomeCombatRooms)]]
+		local nextRoomData = game.DeepCopyTable(game.RoomData[currentBiomeCombatRooms[math.random(1, #currentBiomeCombatRooms)]])
 		print("linked", currentRun.CurrentRoom.Name, "to", nextRoomData.Name)
 		if currentBiome == "H" and currentRun.CurrentRoom.Name ~= "H_Bridge01" then
 			currentRun.CurrentRoom.NumDoorCageRewards = (game.RandomChance(0.8) and math.min(3, nextRoomData.MaxCageRewards or 3)) or 2
 			print("setting up NumDoorCageRewards", currentRun.CurrentRoom.NumDoorCageRewards)
+		end
+		if currentBiome == "O" then
+			nextRoomData.RewardPreviewOverride = "ExitAheadPreview"
 		end
 		if mod.ZagRoomSets[currentBiome] then
 			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
