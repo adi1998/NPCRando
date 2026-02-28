@@ -47,6 +47,15 @@ local function on_ready()
     if config.enabled == false then return end
     mod = modutil.mod.Mod.Register(_PLUGIN.guid)
     import 'ready.lua'
+    mod.PostSetupRunData = {}
+
+    import 'heracles.lua'
+    import 'icarus.lua'
+
+    game.SetupRunData()
+    for _, func in ipairs(mod.PostSetupRunData) do
+        func()
+    end
 end
 
 local function on_reload()
