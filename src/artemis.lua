@@ -15,7 +15,7 @@ local artemisEncounters = {
                 {
                     Path = { "CurrentRun", "BiomeDepthCache" },
                     Comparison = ">=",
-                    Value = 2,
+                    Value = 0,
                 },
                 NamedRequirements = { "NoRecentFieldNPCEncounter" },
                 NamedRequirementsFalse = { "StandardPackageBountyActive", "SurfaceRouteLockedByTyphonKill" },
@@ -55,7 +55,7 @@ for roomSet, encounterTable in pairs(artemisEncounters) do
                         table.insert(roomData.MultipleEncountersData[1].LegalEncounters, encounterName)
                     end
                 else
-                    table.insert(game.ObstacleData.FieldsRewardCage, encounterName)
+                    table.insert(game.ObstacleData.FieldsRewardCage.LegalEncounters, encounterName)
                 end
             end
             table.insert(game.NamedRequirementsData.NoRecentFieldNPCEncounter[1].TableValuesToCount, encounterName)

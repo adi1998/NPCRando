@@ -23,6 +23,22 @@ local icarusEncounters = {
             DifficultyModifier = 150,
             MinWaves = 3,
             MaxWaves = 3,
+            ForceEncounterStart = false,
+            UnthreadedEvents = {
+                {
+                    FunctionName = "GenericPresentation",
+                    Args =
+                    {
+                        LoadVoiceBanks = { "Icarus" },
+                        LoadPackages = { "Icarus" },
+                        IgnoreAssert = true,
+                    },
+                },
+                { FunctionName = "BeginIcarusEncounter" },
+                { FunctionName = "HandleEnemySpawns" },
+                { FunctionName = "CheckForAllEnemiesDead" },
+                { FunctionName = "PostCombatAudio" },
+            },
         },
     },
 
@@ -49,7 +65,7 @@ for roomSet, encounterTable in pairs(icarusEncounters) do
                 if roomSet ~= "H" then
                     table.insert(roomData.LegalEncounters, encounterName)
                 else
-                    table.insert(game.ObstacleData.FieldsRewardCage, encounterName)
+                    table.insert(game.ObstacleData.FieldsRewardCage.LegalEncounters, encounterName)
                 end
             end
             table.insert(game.NamedRequirementsData.NoRecentFieldNPCEncounter[1].TableValuesToCount, encounterName)
