@@ -32,20 +32,25 @@ local icarusEncounters = {
             DifficultyModifier = 150,
             MinWaves = 3,
             MaxWaves = 3,
-            IcarusDummyUnitSet = game.EnemySets.BiomeI,
         },
     },
 }
 
 -- game.OverwriteTableKeys(game.EncounterData, icarusEncounters)
 
+local weight = 5
+
 for roomSet, encounterTable in pairs(icarusEncounters) do
     for _, roomName in ipairs(mod.RoomSets[roomSet]) do
         local roomData = game.RoomData[roomName]
         for encounterName, encounterData in pairs(encounterTable) do
             game.EncounterData[encounterName] = encounterData
-            for i = 1, 5 do
-                table.insert(roomData.LegalEncounters, encounterName)
+            for i = 1, weight do
+                if roomSet ~= "H" then
+                    table.insert(roomData.LegalEncounters, encounterName)
+                else
+                    table.insert(game.ObstacleData.FieldsRewardCage, encounterName)
+                end
             end
             table.insert(game.NamedRequirementsData.NoRecentFieldNPCEncounter[1].TableValuesToCount, encounterName)
         end

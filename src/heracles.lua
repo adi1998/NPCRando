@@ -42,14 +42,22 @@ local heraclesEncounters = {
 
 -- game.OverwriteTableKeys(game.EncounterData, heraclesEncounters)
 
+local weight = 5
+
 for roomSet, encounterTable in pairs(heraclesEncounters) do
     for _, roomName in ipairs(mod.RoomSets[roomSet]) do
         local roomData = game.RoomData[roomName]
         for encounterName, encounterData in pairs(encounterTable) do
             game.EncounterData[encounterName] = encounterData
-            for i = 1, 5 do
-                table.insert(roomData.LegalEncounters, encounterName)
+            for i = 1, weight do
+                if roomSet ~= "H" then
+                    table.insert(roomData.LegalEncounters, encounterName)
+                else
+                    table.insert(game.ObstacleData.FieldsRewardCage, encounterName)
+                end
             end
+            table.insert(game.NamedRequirementsData.NoRecentHeraclesEncounter[2].TableValuesToCount, encounterName)
+            table.insert(game.NamedRequirementsData.NoRecentFieldNPCEncounter[1].TableValuesToCount, encounterName)
         end
     end
 end
@@ -64,8 +72,6 @@ table.insert(mod.PostSetupRunData, function ()
                     table.insert(requirement.SumOf, encounterName)
                 end
             end
-            table.insert(game.NamedRequirementsData.NoRecentHeraclesEncounter[2].TableValuesToCount, encounterName)
-            table.insert(game.NamedRequirementsData.NoRecentFieldNPCEncounter[1].TableValuesToCount, encounterName)
         end
     end
 end)

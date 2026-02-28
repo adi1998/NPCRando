@@ -51,6 +51,8 @@ local function on_ready()
 
     import 'heracles.lua'
     import 'icarus.lua'
+    import 'artemis.lua'
+    import 'nemesis.lua'
 
     game.SetupRunData()
     for _, func in ipairs(mod.PostSetupRunData) do
