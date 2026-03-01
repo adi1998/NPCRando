@@ -17,6 +17,14 @@ local artemisEncounters = {
                     Comparison = ">=",
                     Value = 2,
                 },
+                {
+                    PathFalse = { "CurrentRun", "CurrentRoom", _PLUGIN.guid .. "NextRoomCageFieldEncounters"},
+                },
+                {
+                    Path = { "CurrentRun", "EncountersOccurredCache" },
+                    HasNone = { "ArtemisCombatF", "ArtemisCombatG", "ArtemisCombatG2", "ArtemisCombatN", "ArtemisCombatN2",
+                        "ArtemisCombatIntro", "ArtemisCombatH", "ArtemisCombatI", "ArtemisCombatP" }
+                },
                 NamedRequirements = { "NoRecentFieldNPCEncounter" },
                 NamedRequirementsFalse = { "StandardPackageBountyActive", "SurfaceRouteLockedByTyphonKill" },
             },
@@ -53,7 +61,7 @@ local artemisEncounters = {
     },
 }
 
-local weight = 3
+local weight = 1
 
 for roomSet, encounterTable in pairs(artemisEncounters) do
     for _, roomName in ipairs(mod.RoomSets[roomSet]) do

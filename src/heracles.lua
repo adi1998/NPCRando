@@ -262,6 +262,12 @@ local heraclesEncounters = {
                 -- { FunctionName = "SpawnRoomReward" },
                 { FunctionName = _PLUGIN.guid .. "." .. "SetUnitPostCombatAI" }
             },
+			GameStateRequirements = {
+				Append = true,
+				{
+                    PathFalse = { "CurrentRun", "CurrentRoom", _PLUGIN.guid .. "NextRoomCageFieldEncounters"},
+                },
+			}
         },
     },
 
@@ -278,7 +284,7 @@ local heraclesEncounters = {
 
 -- game.OverwriteTableKeys(game.EncounterData, heraclesEncounters)
 
-local weight = 3
+local weight = 1
 
 for roomSet, encounterTable in pairs(heraclesEncounters) do
     for _, roomName in ipairs(mod.RoomSets[roomSet]) do
@@ -326,4 +332,18 @@ end)
 modutil.mod.Path.Wrap("StartFieldsEncounter", function (base, rewardCage, args)
     game.CurrentRun.CurrentRoom[_PLUGIN.guid .. "CurrentCageEncounter"] = rewardCage.Encounter
     base(rewardCage, args)
+end)
+
+mod.BiomeHFieldEncounters = {
+	"IcarusCombatH",
+	"HeraclesCombatH",
+	"ArtemisCombatH",
+	"NemesisCombatH"
+}
+
+modutil.mod.Path.Wrap("RecordEncounter", function (base, run, encounter)
+	base(run,encounter)
+	if game.Contains(mod.BiomeHFieldEncounters, encounter.Name) then
+		game.CurrentRun.CurrentRoom[_PLUGIN.guid .. "NextRoomCageFieldEncounters"] = true
+	end
 end)

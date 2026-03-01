@@ -81,6 +81,9 @@ local icarusEncounters = {
                     HasNone = {"IcarusCombatF", "IcarusCombatG", "IcarusCombatH", "IcarusCombatI", "IcarusCombatO", "IcarusCombatO2", "IcarusCombatIntro",
                                     "IcarusCombatP", "IcarusCombatP2"}
                 },
+                {
+                    PathFalse = { "CurrentRun", "CurrentRoom", _PLUGIN.guid .. "NextRoomCageFieldEncounters"},
+                },
                 NamedRequirements = { "NoRecentFieldNPCEncounter" },
                 NamedRequirementsFalse = { "StandardPackageBountyActive" },
             },
@@ -107,7 +110,7 @@ local icarusEncounters = {
 
 -- game.OverwriteTableKeys(game.EncounterData, icarusEncounters)
 
-local weight = 3
+local weight = 1
 
 for roomSet, encounterTable in pairs(icarusEncounters) do
     for _, roomName in ipairs(mod.RoomSets[roomSet]) do
