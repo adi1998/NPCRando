@@ -46,7 +46,7 @@ end
 function mod.HeraclesSpawnPresentation( heracles, dummyTarget, currentEncounter )
     
 	HideCombatUI("HeraclesIntro")
-    currentEncounter[_PLUGIN.guid .. "HeraclesUnit"] = heracles
+    currentEncounter[_PLUGIN.guid .. "FieldUnit"] = heracles
 	local encounter = currentEncounter
 	print("CurrentRoom.Encounter", mod.dump(encounter))
 	-- local heracles = ActiveEnemies[encounter.HeraclesId]
@@ -159,11 +159,11 @@ end
 function mod.SetUnitPostCombatAI(eventSource)
     local currentEncounter = eventSource
     print("SetUnitPostCombatAI", mod.dump(eventSource))
-    if currentEncounter[_PLUGIN.guid .. "HeraclesUnit"] then
-        local enemy = currentEncounter[_PLUGIN.guid .. "HeraclesUnit"]
+    if currentEncounter[_PLUGIN.guid .. "FieldUnit"] then
+        local enemy = currentEncounter[_PLUGIN.guid .. "FieldUnit"]
         enemy.AIDisabled = true
         print("disabled AI", enemy.Name)
-        game.wait(0.01)
+        -- game.wait(0.01)
         if enemy.PostCombatAI then
             print("forcing PostCombatAI", enemy.PostCombatAI)
             game.SetAI( enemy.PostCombatAI, enemy )
@@ -278,7 +278,7 @@ local heraclesEncounters = {
 
 -- game.OverwriteTableKeys(game.EncounterData, heraclesEncounters)
 
-local weight = 40
+local weight = 3
 
 for roomSet, encounterTable in pairs(heraclesEncounters) do
     for _, roomName in ipairs(mod.RoomSets[roomSet]) do
