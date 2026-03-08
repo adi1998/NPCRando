@@ -10,7 +10,7 @@ local icarusEncounters = {
                 {
                     Path = { "CurrentRun", "EncountersOccurredCache" },
                     HasNone = {"IcarusCombatF", "IcarusCombatG", "IcarusCombatH", "IcarusCombatI", "IcarusCombatO", "IcarusCombatO2", "IcarusCombatIntro",
-                                    "IcarusCombatP", "IcarusCombatP2"}
+                                    "IcarusCombatP", "IcarusCombatP2", "IcarusCombatN"}
                 },
             }
         },
@@ -27,7 +27,7 @@ local icarusEncounters = {
                 {
                     Path = { "CurrentRun", "EncountersOccurredCache" },
                     HasNone = {"IcarusCombatF", "IcarusCombatG", "IcarusCombatH", "IcarusCombatI", "IcarusCombatO", "IcarusCombatO2", "IcarusCombatIntro",
-                                    "IcarusCombatP", "IcarusCombatP2"}
+                                    "IcarusCombatP", "IcarusCombatP2", "IcarusCombatN"}
                 },
             }
         },
@@ -79,7 +79,7 @@ local icarusEncounters = {
                 {
                     Path = { "CurrentRun", "EncountersOccurredCache" },
                     HasNone = {"IcarusCombatF", "IcarusCombatG", "IcarusCombatH", "IcarusCombatI", "IcarusCombatO", "IcarusCombatO2", "IcarusCombatIntro",
-                                    "IcarusCombatP", "IcarusCombatP2"}
+                                    "IcarusCombatP", "IcarusCombatP2", "IcarusCombatN"}
                 },
                 {
                     PathFalse = { "CurrentRun", "CurrentRoom", _PLUGIN.guid .. "NextRoomCageFieldEncounters"},
@@ -101,7 +101,24 @@ local icarusEncounters = {
                 {
                     Path = { "CurrentRun", "EncountersOccurredCache" },
                     HasNone = {"IcarusCombatF", "IcarusCombatG", "IcarusCombatH", "IcarusCombatI", "IcarusCombatO", "IcarusCombatO2", "IcarusCombatIntro",
-                                    "IcarusCombatP", "IcarusCombatP2"}
+                                    "IcarusCombatP", "IcarusCombatP2", "IcarusCombatN"}
+                },
+            }
+        },
+    },
+
+    N = {
+        IcarusCombatN = {
+            InheritFrom = { "BaseIcarusCombat", "GeneratedN" },
+            DifficultyModifier = 150,
+            MinWaves = 3,
+            MaxWaves = 3,
+            GameStateRequirements = {
+                Append = true,
+                {
+                    Path = { "CurrentRun", "EncountersOccurredCache" },
+                    HasNone = {"IcarusCombatF", "IcarusCombatG", "IcarusCombatH", "IcarusCombatI", "IcarusCombatO", "IcarusCombatO2", "IcarusCombatIntro",
+                                    "IcarusCombatP", "IcarusCombatP2", "IcarusCombatN"}
                 },
             }
         },
