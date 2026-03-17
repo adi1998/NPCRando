@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- fix Medea room not honoring the `config.never_default` setting
+
 ## [0.2.1] - 2026-02-27
 
 - fix Thessely reward previews after story room
