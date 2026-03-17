@@ -410,7 +410,7 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
     if currentRun.CurrentRoom.Name == "N_Hub" and door.Room.Name == "N_Story01" then
         local origStoryRoom = "N_Story01"
         game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
-		local roomData = game.DeepCopyTable(game.RoomData[mod.SelectRandomStoryRoom()])
+		local roomData = game.DeepCopyTable(game.RoomData[mod.SelectRandomStoryRoom(origStoryRoom)])
 		roomData.ChosenRewardType = "Story"
         door.Room = game.CreateRoom(roomData)
         door.Room[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
