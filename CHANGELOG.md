@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-03-17
+
 - fix Medea room not honoring the `config.never_default` setting
 
 ## [0.2.1] - 2026-02-27
@@ -20,7 +22,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.2.1...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.2.2...HEAD
+[0.2.2]: https://github.com/adi1998/NPCRando/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/adi1998/NPCRando/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/adi1998/NPCRando/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/adi1998/NPCRando/compare/4028e3ad30d8ad6199dc7fa17b72ee31845073b2...0.1.0
