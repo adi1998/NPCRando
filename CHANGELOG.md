@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- fix H1 story room reward previews when going back to H2 biome
+
 ## [0.2.2] - 2026-03-17
 
 - fix Medea room not honoring the `config.never_default` setting
