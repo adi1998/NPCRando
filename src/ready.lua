@@ -322,11 +322,6 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 			nextRoomData.EntranceDirection = "LeftRight"
 			nextRoomData.FlipHorizontalChance = 0.0
 		end
-		if mod.ZagRoomSets[currentBiome] then
-			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
-		else
-			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
-		end
 		return nextRoomData
 	end
 	local nextRoomData = base(currentRun, args, otherDoors)
@@ -452,6 +447,16 @@ modutil.mod.Path.Wrap("StartRoom", function (base, currentRun, currentRoom)
 		currentRoom.RewardPreviewOverride = nil
 	end
 	return base(currentRun, currentRoom)
+end)
+
+modutil.mod.Path.Wrap("DoUnlockRoomExits", function (base, run, room)
+	base(run, room)
+	local currentBiome = room[_PLUGIN.guid .. "CurrentBiome"]
+	if currentBiome and mod.ZagRoomSets[currentBiome] then
+		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
+	elseif currentBiome then
+		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
+	end
 end)
 
 if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].IsValidInstallation then
