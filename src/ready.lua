@@ -340,6 +340,9 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 		else
 			nextRoomData.RewardPreviewOverride = "StoryPreview"
 		end
+		if game.HasHeroTraitValue( "HiddenRoomReward" ) then
+			nextRoomData.RewardPreviewOverride = "ChaosPreview"
+		end
 		nextRoomData.SecretSpawnChance = 0
 		nextRoomData.SecretChanceSuccess = false
 		nextRoomData.ShrinePointDoorSpawnChance = 0
@@ -459,18 +462,18 @@ modutil.mod.Path.Wrap("DoUnlockRoomExits", function (base, run, room)
 	end
 end)
 
+modutil.mod.Path.Wrap("SetupClockworkGoalReward", function (base, rewardData, currentRoom, room, previouslyChosenRewards, args, setupFunctionArgs)
+	base(rewardData, currentRoom, room, previouslyChosenRewards, args, setupFunctionArgs)
+	if not game.Contains({"HadesLockIcon", "ShopPreview"}, room.RewardPreviewOverride) then
+		print("unexpected RewardPreviewOverride found", room.RewardPreviewOverride)
+		room.RewardPreviewOverride = "ClockworkCountdown"..(game.CurrentRun.RemainingClockworkGoals or 0)
+		print("replacing with", room.RewardPreviewOverride)
+	end
+end)
+
 if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].IsValidInstallation then
 	modutil.mod.Path.Wrap("LoadCurrentRoomResources", function (base, ...)
 		game.LoadPackages({ Names = { "ModsNikkelMHadesBiomesGUIOriginal" } })
 		base(...)
-	end)
-
-	modutil.mod.Path.Wrap("SetupClockworkGoalReward", function (base, rewardData, currentRoom, room, previouslyChosenRewards, args, setupFunctionArgs)
-		base(rewardData, currentRoom, room, previouslyChosenRewards, args, setupFunctionArgs)
-		if not game.Contains({"HadesLockIcon", "ShopPreview"}, room.RewardPreviewOverride) then
-			print("unexpected RewardPreviewOverride found", room.RewardPreviewOverride)
-			room.RewardPreviewOverride = "ClockworkCountdown"..(game.CurrentRun.RemainingClockworkGoals or 0)
-			print("replacing with", room.RewardPreviewOverride)
-		end
 	end)
 end
