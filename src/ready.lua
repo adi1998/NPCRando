@@ -437,6 +437,7 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 		game.CurrentRun.RoomsEntered[currentRun.CurrentRoom.Name] = nil
 		print("resetting CurrentRun.RoomsEntered for", currentRun.CurrentRoom.Name)
 	end
+	-- set/unset ModsNikkelMHadesBiomesIsModdedRun if next story room is part of Zags Journey or not
 	if door.Room[_PLUGIN.guid .. "CurrentBiome"] and game.Contains(zagStoryRooms, door.Room.Name) then
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
 	elseif door.Room[_PLUGIN.guid .. "CurrentBiome"] and not game.Contains(zagStoryRooms, door.Room.Name) then
@@ -453,13 +454,15 @@ modutil.mod.Path.Wrap("StartRoom", function (base, currentRun, currentRoom)
 end)
 
 modutil.mod.Path.Wrap("DoUnlockRoomExits", function (base, run, room)
-	base(run, room)
+	local retval = base(run, room)
 	local currentBiome = room[_PLUGIN.guid .. "CurrentBiome"]
+	-- set/unset ModsNikkelMHadesBiomesIsModdedRun while unlocking doors from a random story room to our current biome
 	if currentBiome and mod.ZagRoomSets[currentBiome] then
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
 	elseif currentBiome then
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 	end
+	return retval
 end)
 
 modutil.mod.Path.Wrap("SetupClockworkGoalReward", function (base, rewardData, currentRoom, room, previouslyChosenRewards, args, setupFunctionArgs)
