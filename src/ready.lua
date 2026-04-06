@@ -405,6 +405,7 @@ modutil.mod.Path.Wrap("AttemptUseDoor", function (base, door, args)
 end)
 
 modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
+	-- changing story room while entering Medea
     if currentRun.CurrentRoom.Name == "N_Hub" and door.Room.Name == "N_Story01" then
         local origStoryRoom = "N_Story01"
         game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
@@ -425,6 +426,8 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 		door.Room.AnomalyDoorChanceSuccess = false
 		print("swapped", origStoryRoom, "with", door.Room.Name)
     end
+
+	-- exiting from Medea to not Ephyra
 	local currentBiome = currentRun.CurrentRoom[_PLUGIN.guid .. "CurrentBiome"]
 	if currentBiome and currentBiome ~= "N" and currentRun.CurrentRoom.Name == "N_Story01" then
 		game.CurrentRun.CurrentRoom.NextHeroStartPoint = nil
@@ -437,7 +440,15 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 		game.CurrentRun.RoomsEntered[currentRun.CurrentRoom.Name] = nil
 		print("resetting CurrentRun.RoomsEntered for", currentRun.CurrentRoom.Name)
 	end
-	-- set/unset ModsNikkelMHadesBiomesIsModdedRun if next story room is part of Zags Journey or not
+
+	-- exiting from not-Medea to Ephyra
+	if currentBiome and currentBiome == "N" and currentRun.CurrentRoom.Name ~= "N_Story01" then
+		local roomData = game.RoomData["N_Story01"]
+		game.OverwriteTableKeys( game.CurrentRun.CurrentRoom, roomData.OnUseSetRunData["EphyraExitDoorReturnNE"] )
+		print("set NextHeroStartPoint and NextHeroEndPoint while exiting to N_Hub from", currentRun.CurrentRoom.Name, "to", mod.dump(roomData.OnUseSetRunData["EphyraExitDoorReturnNE"]))
+	end
+
+	-- set/unset ModsNikkelMHadesBiomesIsModdedRun if next random story room is part of Zags Journey or not
 	if door.Room[_PLUGIN.guid .. "CurrentBiome"] and game.Contains(zagStoryRooms, door.Room.Name) then
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
 	elseif door.Room[_PLUGIN.guid .. "CurrentBiome"] and not game.Contains(zagStoryRooms, door.Room.Name) then

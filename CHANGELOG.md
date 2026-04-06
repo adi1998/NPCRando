@@ -4,6 +4,7 @@
 
 - fix H1 story room reward previews when going back to H2 biome in most cases
 - fix hidden preview chaos curse not working for story rooms
+- fix transition from randomized story room to ephyra
 
 ## [0.2.2] - 2026-03-17
 
