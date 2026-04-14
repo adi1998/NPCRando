@@ -31,7 +31,7 @@ local zagStoryRooms = {
 	"Y_Story01",
 }
 
-if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].IsValidInstallation then
+if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].IsValidInstallation and rom.mods["NikkelM-Zagreus_Journey"].config.enabled then
 	game.ConcatTableValuesIPairs(storyRooms, zagStoryRooms)
 end
 
@@ -248,7 +248,7 @@ mod.ZagRoomSets = {
 	},
 }
 
-if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].IsValidInstallation then
+if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].IsValidInstallation and rom.mods["NikkelM-Zagreus_Journey"].config.enabled then
 	game.OverwriteTableKeys(mod.RoomSets, mod.ZagRoomSets)
 end
 
@@ -485,7 +485,7 @@ modutil.mod.Path.Wrap("SetupClockworkGoalReward", function (base, rewardData, cu
 	end
 end)
 
-if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].IsValidInstallation then
+if rom.mods["NikkelM-Zagreus_Journey"] and rom.mods["NikkelM-Zagreus_Journey"].IsValidInstallation and rom.mods["NikkelM-Zagreus_Journey"].config.enabled then
 	modutil.mod.Path.Wrap("LoadCurrentRoomResources", function (base, ...)
 		game.LoadPackages({ Names = { "ModsNikkelMHadesBiomesGUIOriginal" } })
 		base(...)
