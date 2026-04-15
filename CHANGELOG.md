@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-04-15
+
 - fix H1 story room reward previews when going back to H2 biome in most cases
 - fix hidden preview chaos curse not working for story rooms
 - fix transition from randomized story room to ephyra
@@ -26,7 +28,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.2.2...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.3.0...HEAD
+[0.3.0]: https://github.com/adi1998/NPCRando/compare/0.2.2...0.3.0
 [0.2.2]: https://github.com/adi1998/NPCRando/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/adi1998/NPCRando/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/adi1998/NPCRando/compare/0.1.0...0.2.0
