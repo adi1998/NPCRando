@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- re-enable Zag's Journey support
+
 ## [0.3.0] - 2026-04-15
 
 - fix H1 story room reward previews when going back to H2 biome in most cases
