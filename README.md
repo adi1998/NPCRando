@@ -1,6 +1,6 @@
 ## NPC Room Randomizer
 
-Randomizes NPC story rooms between each other. Configurable to never have the default story room. Also supports NPC story rooms from Zagreus' Journey.
+Randomizes NPC story rooms between each other. Configurable to never have the default story room. Compatible with Dream Dives. Also supports NPC story rooms from Zagreus' Journey.
 
 ## Installation
 
