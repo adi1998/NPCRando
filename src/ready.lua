@@ -343,6 +343,10 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 		if game.HasHeroTraitValue( "HiddenRoomReward" ) then
 			nextRoomData.RewardPreviewOverride = "ChaosPreview"
 		end
+		-- fix for triple poms and coins showing up outside Tartarus
+		if currentRun.CurrentRoom.RoomSetName ~= "I" and nextRoomData.Name == "I_Story01" then
+			nextRoomData.ForcedRewardStore = nil
+		end
 		nextRoomData.SecretSpawnChance = 0
 		nextRoomData.SecretChanceSuccess = false
 		nextRoomData.ShrinePointDoorSpawnChance = 0
