@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-04-19
+
 - fix for triple rewards showing up unexpectedly
 
 ## [0.3.1] - 2026-04-16
@@ -34,7 +36,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.3.1...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.3.2...HEAD
+[0.3.2]: https://github.com/adi1998/NPCRando/compare/0.3.1...0.3.2
 [0.3.1]: https://github.com/adi1998/NPCRando/compare/0.3.0...0.3.1
 [0.3.0]: https://github.com/adi1998/NPCRando/compare/0.2.2...0.3.0
 [0.2.2]: https://github.com/adi1998/NPCRando/compare/0.2.1...0.2.2
