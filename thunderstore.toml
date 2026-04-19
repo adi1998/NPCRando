@@ -4,13 +4,8 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "zerp"
 name = "NPCRoomRandomizer"
-<<<<<<< HEAD
-versionNumber = "0.3.0"
 description = "Randomizes NPC story rooms between each other(Dio in the Underworld, Echo on Surface, etc). Compatible with Dream Dives and Zagreus' Journey."
-=======
 versionNumber = "0.3.1"
-description = "Randomizes NPC story rooms between each other(Dio in the Underworld, Echo on Surface, etc). Also works with story rooms from Zagreus' Journey."
->>>>>>> 8ff5c8a1c054e8de5552a736ca9f1c370d3721ec
 websiteUrl = "https://github.com/adi1998/NPCRando"
 containsNsfwContent = false
 
