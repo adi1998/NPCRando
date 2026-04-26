@@ -398,6 +398,7 @@ modutil.mod.Path.Wrap("AttemptUseDoor", function (base, door, args)
 				print("increasing destroyed SoulPylon count to", game.CurrentRun.SpawnRecord.SoulPylon)
 			end
 			print("linked", currentRun.CurrentRoom.Name, "to N_Hub")
+			print("setting ModsNikkelMHadesBiomesIsModdedRun = false")
 			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 		elseif currentBiome and currentBiome ~= "N" and currentRun.CurrentRoom.Name == "N_Story01" then
 			door.ReturnToPreviousRoomName = nil
@@ -454,8 +455,10 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 
 	-- set/unset ModsNikkelMHadesBiomesIsModdedRun if next random story room is part of Zags Journey or not
 	if door.Room[_PLUGIN.guid .. "CurrentBiome"] and game.Contains(zagStoryRooms, door.Room.Name) then
+		print("setting ModsNikkelMHadesBiomesIsModdedRun = true")
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
 	elseif door.Room[_PLUGIN.guid .. "CurrentBiome"] and not game.Contains(zagStoryRooms, door.Room.Name) then
+		print("setting ModsNikkelMHadesBiomesIsModdedRun = false")
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 	end
     return base(currentRun, door)
@@ -471,10 +474,20 @@ end)
 modutil.mod.Path.Wrap("DoUnlockRoomExits", function (base, run, room)
 	local retval = base(run, room)
 	local currentBiome = room[_PLUGIN.guid .. "CurrentBiome"]
+	local currentBiomeCombatRooms = mod.RoomSets[currentBiome]
+	if currentBiome and not currentBiomeCombatRooms then
+		print("DoUnlockRoomExits")
+		print("previous room biome not valid:", currentBiome , ", getting RoomSetName from room n-2")
+		local prevRoomIndex = game.TableLength( run.RoomHistory ) - 1
+		currentBiome = run.RoomHistory[prevRoomIndex].RoomSetName
+		print("new currentBiome", currentBiome)
+	end
 	-- set/unset ModsNikkelMHadesBiomesIsModdedRun while unlocking doors from a random story room to our current biome
 	if currentBiome and mod.ZagRoomSets[currentBiome] then
+		print("setting ModsNikkelMHadesBiomesIsModdedRun = true")
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
 	elseif currentBiome then
+		print("setting ModsNikkelMHadesBiomesIsModdedRun = false")
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 	end
 	return retval
