@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.3.3] - 2026-04-29
+
 - fix Zag's Journey breaking when going from Chaos/Erebus gates to a non-H1 story room
 
 ## [0.3.2] - 2026-04-19
@@ -38,7 +40,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.3.2...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.3.3...HEAD
+[0.3.3]: https://github.com/adi1998/NPCRando/compare/0.3.2...0.3.3
 [0.3.2]: https://github.com/adi1998/NPCRando/compare/0.3.1...0.3.2
 [0.3.1]: https://github.com/adi1998/NPCRando/compare/0.3.0...0.3.1
 [0.3.0]: https://github.com/adi1998/NPCRando/compare/0.2.2...0.3.0
