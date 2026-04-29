@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- fix Zag's Journey breaking when going from Chaos/Erebus gates to a non-H1 story room
+
 ## [0.3.2] - 2026-04-19
 
 - fix for triple rewards showing up unexpectedly
