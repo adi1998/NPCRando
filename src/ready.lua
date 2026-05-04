@@ -262,14 +262,26 @@ for _, storyRoom in ipairs(storyRooms) do
     })
 end
 
-function mod.SelectRandomStoryRoom(origStoryRoom)
+function mod.SelectRandomStoryRoom(origStoryRoom, banned_room_1, banned_room_2)
     local unusedStoryRooms = {}
     for _, storyRoom in ipairs(storyRooms) do
         if not game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][storyRoom] and ( (not config.never_default) or origStoryRoom ~= storyRoom ) then
             table.insert(unusedStoryRooms, storyRoom)
         end
     end
+	if config.dream_dive_only and not game.CurrentRun.IsDreamRun then
+		print("forcing default story room due to config.dream_dive_only")
+		return origStoryRoom
+	end
+	game.RemoveValueAndCollapse(unusedStoryRooms, banned_room_1)
+	print("removing", banned_room_1, "from room pool")
+	game.RemoveValueAndCollapse(unusedStoryRooms, banned_room_2)
+	print("removing", banned_room_2, "from room pool")
+
 	print("available story rooms", mod.dump(unusedStoryRooms))
+	if #unusedStoryRooms == 0 then
+		return
+	end
 	local retval = unusedStoryRooms[math.random(1, #unusedStoryRooms)]
 	print("Selected", retval)
     return retval
@@ -328,7 +340,8 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 	if game.Contains(storyRooms, nextRoomData.Name) then
 		local origStoryRoom = nextRoomData.Name
 		game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
-		nextRoomData = game.DeepCopyTable(game.RoomData[mod.SelectRandomStoryRoom(origStoryRoom)])
+		local newStoryRoom = mod.SelectRandomStoryRoom(origStoryRoom, config.banned_room_1, config.banned_room_2) or mod.SelectRandomStoryRoom(origStoryRoom)
+		nextRoomData = game.DeepCopyTable(game.RoomData[newStoryRoom])
 		nextRoomData[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
 		game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][nextRoomData.Name] = true
 		if game.CurrentRun.BiomesReached[nextRoomData.RoomSetName] then
@@ -414,7 +427,8 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
     if currentRun.CurrentRoom.Name == "N_Hub" and door.Room.Name == "N_Story01" then
         local origStoryRoom = "N_Story01"
         game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
-		local roomData = game.DeepCopyTable(game.RoomData[mod.SelectRandomStoryRoom(origStoryRoom)])
+		local newStoryRoom = mod.SelectRandomStoryRoom(origStoryRoom, config.banned_room_1, config.banned_room_2) or mod.SelectRandomStoryRoom(origStoryRoom)
+		local roomData = game.DeepCopyTable(game.RoomData[newStoryRoom])
 		roomData.ChosenRewardType = "Story"
         door.Room = game.CreateRoom(roomData)
         door.Room[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName

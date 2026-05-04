@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Add config to ban upto 2 story rooms form appearing
+- Add config to only allow random story rooms in Dream Dives
+
 ## [0.3.3] - 2026-04-29
 
 - fix Zag's Journey breaking when going from Chaos/Erebus gates to a non-H1 story room
