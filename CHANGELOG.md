@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Fix reward previews for H1 story rooms when going back to Fields of Mourning
+
 ## [0.4.0] - 2026-05-04
 
 - Add config to ban upto 2 story rooms form appearing

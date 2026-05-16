@@ -334,6 +334,10 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 			nextRoomData.EntranceDirection = "LeftRight"
 			nextRoomData.FlipHorizontalChance = 0.0
 		end
+		if currentBiome == "H" then
+			print("reseting ModsNikkelMHadesBiomesIsModdedRun early for BiomeH multi reward preview fix")
+			game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
+		end
 		return nextRoomData
 	end
 	local nextRoomData = base(currentRun, args, otherDoors)
@@ -500,7 +504,7 @@ modutil.mod.Path.Wrap("DoUnlockRoomExits", function (base, run, room)
 	if currentBiome and mod.ZagRoomSets[currentBiome] then
 		print("setting ModsNikkelMHadesBiomesIsModdedRun = true")
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
-	elseif currentBiome then
+	elseif currentBiome and not mod.ZagRoomSets[currentBiome] then
 		print("setting ModsNikkelMHadesBiomesIsModdedRun = false")
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 	end
