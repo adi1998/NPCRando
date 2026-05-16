@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-05-16
+
 - Fix reward previews for H1 story rooms when going back to Fields of Mourning
 
 ## [0.4.0] - 2026-05-04
@@ -47,7 +49,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.0...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.1...HEAD
+[0.4.1]: https://github.com/adi1998/NPCRando/compare/0.4.0...0.4.1
 [0.4.0]: https://github.com/adi1998/NPCRando/compare/0.3.3...0.4.0
 [0.3.3]: https://github.com/adi1998/NPCRando/compare/0.3.2...0.3.3
 [0.3.2]: https://github.com/adi1998/NPCRando/compare/0.3.1...0.3.2
