@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Fix transitions from Charon fight to a random story room leaving the stranded in another biome
+
 ## [0.4.1] - 2026-05-16
 
 - Fix reward previews for H1 story rooms when going back to Fields of Mourning
