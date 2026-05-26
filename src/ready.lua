@@ -346,7 +346,7 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 		game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
 		local newStoryRoom = mod.SelectRandomStoryRoom(origStoryRoom, config.banned_room_1, config.banned_room_2) or mod.SelectRandomStoryRoom(origStoryRoom)
 		nextRoomData = game.DeepCopyTable(game.RoomData[newStoryRoom])
-		nextRoomData[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
+		nextRoomData[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName or "UnknownRoomSet"
 		game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][nextRoomData.Name] = true
 		if game.CurrentRun.BiomesReached[nextRoomData.RoomSetName] then
 			nextRoomData[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
@@ -435,7 +435,7 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 		local roomData = game.DeepCopyTable(game.RoomData[newStoryRoom])
 		roomData.ChosenRewardType = "Story"
         door.Room = game.CreateRoom(roomData)
-        door.Room[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName
+        door.Room[_PLUGIN.guid .. "CurrentBiome"] = currentRun.CurrentRoom.RoomSetName or "UnknownRoomSet"
         game.CurrentRun[_PLUGIN.guid .. "StoryRoomsCreated"][door.Room.Name] = true
 		if game.CurrentRun.BiomesReached[door.Room.RoomSetName] then
 			door.Room[_PLUGIN.guid .. "SkipBiomeCleanup"] = true
