@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Fix Fields sometimes not able to offer final shop
+
 ## [0.4.2] - 2026-05-26
 
 - Fix transitions from Charon fight to a random story room leaving the stranded in another biome
