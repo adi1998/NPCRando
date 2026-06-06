@@ -254,7 +254,8 @@ end
 
 
 game.RoomData["H_PreBoss01"].GameStateRequirements = {}
-game.RoomData["H_PreBoss01"].ForceAtBiomeDepth = 5
+game.RoomData["H_PreBoss01"].ForceAtBiomeDepthMin = 5
+game.RoomData["H_PreBoss01"].ForceAtBiomeDepthMax = 6
 
 for _, storyRoom in ipairs(storyRooms) do
     table.insert(game.RoomData[storyRoom].GameStateRequirements, {

@@ -18,4 +18,4 @@ Mod can be configured through the r2modman config editor. Requires the game to b
 
 ## Issues and feedback
 
-Report any issues or feedback [here](https://github.com/adi1998/NPCRando/issues) or on the [Hades Modding Discord](https://discord.gg/bKvJTAJj)
+Report any issues or feedback [here](https://github.com/adi1998/NPCRando/issues) or on the [Hades Modding Discord](https://discord.gg/KuMbyrN)
