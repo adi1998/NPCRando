@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-05-26
+
 - Fix transitions from Charon fight to a random story room leaving the stranded in another biome
 
 ## [0.4.1] - 2026-05-16
@@ -51,7 +53,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.1...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.2...HEAD
+[0.4.2]: https://github.com/adi1998/NPCRando/compare/0.4.1...0.4.2
 [0.4.1]: https://github.com/adi1998/NPCRando/compare/0.4.0...0.4.1
 [0.4.0]: https://github.com/adi1998/NPCRando/compare/0.3.3...0.4.0
 [0.3.3]: https://github.com/adi1998/NPCRando/compare/0.3.2...0.3.3
