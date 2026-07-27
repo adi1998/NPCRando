@@ -388,7 +388,7 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 	end
 	if nextRoomData == nil then
 		print(debug.traceback("ChooseNextRoomData returned nil"))
-		print("args", mod.dump(args), currentRun.CurrentRoom.Name)
+		print("args", mod.dump(args), currentRun.CurrentRoom.Name, currentRun.CurrentRoom.RoomSetName)
 	end
 	return nextRoomData
 end)
