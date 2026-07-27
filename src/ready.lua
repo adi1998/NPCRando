@@ -387,7 +387,8 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 		nextRoomData.NextRoomSet = { currentBiome }
 	end
 	if nextRoomData == nil then
-		print(debug.traceback("ChooseNextRoomData returned nil"), "args", mod.dump(args))
+		print(debug.traceback("ChooseNextRoomData returned nil"))
+		print("args", mod.dump(args), currentRun.CurrentRoom.Name)
 	end
 	return nextRoomData
 end)
