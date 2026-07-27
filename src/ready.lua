@@ -342,7 +342,7 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 		return nextRoomData
 	end
 	local nextRoomData = base(currentRun, args, otherDoors)
-	if game.Contains(storyRooms, nextRoomData.Name) then
+	if nextRoomData and game.Contains(storyRooms, nextRoomData.Name) then
 		local origStoryRoom = nextRoomData.Name
 		game.CurrentRun[_PLUGIN.guid .. "SwappedStoryMap"][origStoryRoom] = true
 		local newStoryRoom = mod.SelectRandomStoryRoom(origStoryRoom, config.banned_room_1, config.banned_room_2) or mod.SelectRandomStoryRoom(origStoryRoom)
@@ -373,7 +373,7 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 		nextRoomData.AnomalyDoorChanceSuccess = false
 		print("swapped", origStoryRoom, "with", nextRoomData.Name)
 	end
-	if currentBiome and (args.ForceNextRoomSet or nextRoomData.UsePreviousRoomSet) then
+	if nextRoomData and currentBiome and (args.ForceNextRoomSet or nextRoomData.UsePreviousRoomSet) then
 		print("story to secret biome transition detected,", "args.ForceNextRoomSet:", args.ForceNextRoomSet, ", nextRoomData.UsePreviousRoomSet:", nextRoomData.UsePreviousRoomSet)
 		nextRoomData = game.DeepCopyTable(nextRoomData)
 		local currentBiomeCombatRooms = mod.RoomSets[currentBiome]
@@ -385,6 +385,9 @@ modutil.mod.Path.Wrap("ChooseNextRoomData", function (base, currentRun, args, ot
 		end
 		print("applied NextRoomSet for room", nextRoomData.Name)
 		nextRoomData.NextRoomSet = { currentBiome }
+	end
+	if nextRoomData == nil then
+		print(debug.traceback("ChooseNextRoomData returned nil"), "args", mod.dump(args))
 	end
 	return nextRoomData
 end)

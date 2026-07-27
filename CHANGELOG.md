@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Add some nil checks and print stack if ChooseNextRoomData returns nil
+
 ## [0.4.3] - 2026-06-06
 
 - Fix Fields sometimes not able to offer final shop
