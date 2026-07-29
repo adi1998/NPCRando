@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.5] - 2026-07-29
+
 - Update condition which checks for a valid ZJ installation
 
 ## [0.4.4] - 2026-07-27
@@ -63,7 +65,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.4...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.5...HEAD
+[0.4.5]: https://github.com/adi1998/NPCRando/compare/0.4.4...0.4.5
 [0.4.4]: https://github.com/adi1998/NPCRando/compare/0.4.3...0.4.4
 [0.4.3]: https://github.com/adi1998/NPCRando/compare/0.4.2...0.4.3
 [0.4.2]: https://github.com/adi1998/NPCRando/compare/0.4.1...0.4.2
