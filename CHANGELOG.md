@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Update condition which checks for a valid ZJ installation
+
 ## [0.4.4] - 2026-07-27
 
 - Add some nil checks and print stack if ChooseNextRoomData returns nil

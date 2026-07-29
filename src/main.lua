@@ -45,6 +45,10 @@ local function on_ready()
     -- what to do when we are ready, but not re-do on reload.
     if config.enabled == false then return end
     mod = modutil.mod.Mod.Register(_PLUGIN.guid)
+    mod.IsZagAvailable = rom.mods["NikkelM-Zagreus_Journey"] and
+                         rom.mods["NikkelM-Zagreus_Journey"].config and
+                         rom.mods["NikkelM-Zagreus_Journey"].config.enabled and
+                         rom.mods["NikkelM-Zagreus_Journey"].IsValidInstallation
     import 'ready.lua'
 end
 
