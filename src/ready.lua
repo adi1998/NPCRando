@@ -528,6 +528,6 @@ end)
 if mod.IsZagAvailable then
 	modutil.mod.Path.Wrap("LoadCurrentRoomResources", function (base, ...)
 		game.LoadPackages({ Names = { "ModsNikkelMHadesBiomesGUIOriginal" } })
-		base(...)
+		return base(...)
 	end)
 end

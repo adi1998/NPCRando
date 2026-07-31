@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Fix Dionysus to Olympus combat room transition sometimes leaving the player OOB
+
 ## [0.4.5] - 2026-07-29
 
 - Update condition which checks for a valid ZJ installation
