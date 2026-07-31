@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.6] - 2026-07-31
+
 - Fix Dionysus to Olympus combat room transition sometimes leaving the player OOB
 
 ## [0.4.5] - 2026-07-29
@@ -67,7 +69,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.5...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.6...HEAD
+[0.4.6]: https://github.com/adi1998/NPCRando/compare/0.4.5...0.4.6
 [0.4.5]: https://github.com/adi1998/NPCRando/compare/0.4.4...0.4.5
 [0.4.4]: https://github.com/adi1998/NPCRando/compare/0.4.3...0.4.4
 [0.4.3]: https://github.com/adi1998/NPCRando/compare/0.4.2...0.4.3
