@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Optional dependency on ZJ
+
 ## [0.4.6] - 2026-07-31
 
 - Fix Dionysus to Olympus combat room transition sometimes leaving the player OOB
