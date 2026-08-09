@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.7] - 2026-08-09
+
 - Optional dependency on ZJ
 
 ## [0.4.6] - 2026-07-31
@@ -71,7 +73,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.6...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.7...HEAD
+[0.4.7]: https://github.com/adi1998/NPCRando/compare/0.4.6...0.4.7
 [0.4.6]: https://github.com/adi1998/NPCRando/compare/0.4.5...0.4.6
 [0.4.5]: https://github.com/adi1998/NPCRando/compare/0.4.4...0.4.5
 [0.4.4]: https://github.com/adi1998/NPCRando/compare/0.4.3...0.4.4
