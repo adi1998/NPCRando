@@ -37,7 +37,11 @@ chalk = mods["SGG_Modding-Chalk"]
 reload = mods['SGG_Modding-ReLoad']
 
 ---@module 'config'
-config = chalk.auto 'config.lua'
+if rom.mod_settings and rom.mod_settings.load then
+    config = rom.mod_settings.load 'config.lua'
+else
+    config = chalk.auto 'config_legacy.lua'
+end
 -- ^ this updates our `.cfg` file in the config folder!
 public.config = config -- so other mods can access our config
 
