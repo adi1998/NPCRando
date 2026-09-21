@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.8] - 2026-09-21
+
 - Minor AP compatibility fix
 
 ## [0.4.7] - 2026-08-09
@@ -75,7 +77,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.7...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.8...HEAD
+[0.4.8]: https://github.com/adi1998/NPCRando/compare/0.4.7...0.4.8
 [0.4.7]: https://github.com/adi1998/NPCRando/compare/0.4.6...0.4.7
 [0.4.6]: https://github.com/adi1998/NPCRando/compare/0.4.5...0.4.6
 [0.4.5]: https://github.com/adi1998/NPCRando/compare/0.4.4...0.4.5
