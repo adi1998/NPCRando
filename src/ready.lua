@@ -31,6 +31,15 @@ local zagStoryRooms = {
 	"Y_Story01",
 }
 
+local zagBiomes = {
+	"Tartarus",
+	"Asphodel",
+	"Elysium",
+	"Styx",
+	"Challenge",
+	"Surface"
+}
+
 if mod.IsZagAvailable then
 	game.ConcatTableValuesIPairs(storyRooms, zagStoryRooms)
 end
@@ -477,10 +486,10 @@ modutil.mod.Path.Wrap("LeaveRoom", function (base, currentRun, door)
 	end
 
 	-- set/unset ModsNikkelMHadesBiomesIsModdedRun if next random story room is part of Zags Journey or not
-	if door.Room[_PLUGIN.guid .. "CurrentBiome"] and game.Contains(zagStoryRooms, door.Room.Name) then
+	if door.Room[_PLUGIN.guid .. "CurrentBiome"] and game.Contains(zagBiomes, door.Room.RoomSetName) then
 		print("setting ModsNikkelMHadesBiomesIsModdedRun = true")
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = true
-	elseif door.Room[_PLUGIN.guid .. "CurrentBiome"] and not game.Contains(zagStoryRooms, door.Room.Name) then
+	elseif door.Room[_PLUGIN.guid .. "CurrentBiome"] and not game.Contains(zagBiomes, door.Room.RoomSetName) then
 		print("setting ModsNikkelMHadesBiomesIsModdedRun = false")
 		game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun = false
 	end

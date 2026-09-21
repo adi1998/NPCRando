@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Minor AP compatibility fix
+
 ## [0.4.7] - 2026-08-09
 
 - Optional dependency on ZJ
