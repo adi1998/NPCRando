@@ -294,7 +294,7 @@ function mod.SelectRandomStoryRoom(origStoryRoom, banned_room_1, banned_room_2)
 	end
 	local retval = unusedStoryRooms[math.random(1, #unusedStoryRooms)]
 	print("Selected", retval)
-    return "A_Story01"
+    return retval
 end
 
 modutil.mod.Path.Wrap("OlympusSkyExitPresentation", function (base, currentRun, exitDoor)
@@ -536,22 +536,36 @@ end)
 
 modutil.mod.Path.Wrap("CreateDoorRewardPreview", function (base, exitDoor, chosenRewardType, chosenLootName, index, args)
 	-- shift the reward preview for Asphodel and Elysium story room when going back to Fields.
-	local yOffsetModifications = {
-		AsphodelBoat01b = 220,
-		ElysiumExitDoor = 50,
-	}
-	local multi_reward_zoffset = 180
-	local elysium_zoffset = 105
-	local elysium_xoffset = 177
-	index = index or 1
+	if modutil.mod.IndexArray.Get({"CurrentRun", "CurrentRoom", _PLUGIN.guid .. "CurrentBiome"}, game) then
+		local yOffsetModifications = {
+			AsphodelBoat01b = 220,
+			ElysiumExitDoor = 50,
+			TartarusDoor03b = 60,
+		}
+		local xOffSetModifications = {
+			TartarusDoor03b = -30,
+		}
+		local multi_reward_zoffset = 180
+		local elysium_zoffset = 105
+		local elysium_xoffset = 177
+		index = index or 1
 
-	if exitDoor and exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] and exitDoor.Name == "ElysiumExitDoor" and index > 1 then
-		exitDoor.RewardPreviewOffsetZ = exitDoor.RewardPreviewOffsetZ - multi_reward_zoffset - ((-1) ^ (index%2)) * elysium_zoffset * (index - 1)
-		exitDoor.RewardPreviewOffsetX = exitDoor.RewardPreviewOffsetX + (((-1) ^ (index%2)) * elysium_xoffset)*(index - 1)
-	end
-	if exitDoor and yOffsetModifications[exitDoor.Name] and not game.ModsNikkelMHadesBiomesIsModdedRun and not exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] then
-		exitDoor.RewardPreviewOffsetY = (exitDoor.RewardPreviewOffsetY or 0) + yOffsetModifications[exitDoor.Name]
-		exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] = true
+		if exitDoor and exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] and exitDoor.Name == "ElysiumExitDoor" and index > 1 then
+			exitDoor.RewardPreviewOffsetZ = exitDoor.RewardPreviewOffsetZ - multi_reward_zoffset - ((-1) ^ (index%2)) * elysium_zoffset * (index - 1)
+			exitDoor.RewardPreviewOffsetX = exitDoor.RewardPreviewOffsetX + (((-1) ^ (index%2)) * elysium_xoffset)*(index - 1)
+		end
+		if exitDoor and yOffsetModifications[exitDoor.Name] and not game.ModsNikkelMHadesBiomesIsModdedRun and not exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] then
+			exitDoor.RewardPreviewOffsetY = (exitDoor.RewardPreviewOffsetY or 0) + yOffsetModifications[exitDoor.Name]
+			exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] = true
+		end
+		if exitDoor and xOffSetModifications[exitDoor.Name] and not game.ModsNikkelMHadesBiomesIsModdedRun and not exitDoor[_PLUGIN.guid .. "AdjustedOffSetX"] then
+			exitDoor.RewardPreviewOffsetX = (exitDoor.RewardPreviewOffsetX or 0) + xOffSetModifications[exitDoor.Name]
+			exitDoor[_PLUGIN.guid .. "AdjustedOffSetX"] = true
+		end
+		if exitDoor and exitDoor.Name == "TartarusDoor03b" and not game.ModsNikkelMHadesBiomesIsModdedRun then
+			exitDoor.UnlockedAnimation = "Blank"
+			exitDoor.UnlockedAnimationMetaReward = "Blank"
+		end
 	end
 	return base(exitDoor, chosenRewardType, chosenLootName, index, args)
 end)
