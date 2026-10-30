@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Adjust reward preview offsets when exiting ZJ story rooms in the Fields of Mourning.
+- Block Force Chaos effect from triggering in Ephyra, Summit, Styx and the second half of Fields. Mitigation for Orpheus' Chaos boon.
+
 ## [0.4.8] - 2026-09-21
 
 - Minor AP compatibility fix

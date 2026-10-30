@@ -294,7 +294,7 @@ function mod.SelectRandomStoryRoom(origStoryRoom, banned_room_1, banned_room_2)
 	end
 	local retval = unusedStoryRooms[math.random(1, #unusedStoryRooms)]
 	print("Selected", retval)
-    return retval
+    return "A_Story01"
 end
 
 modutil.mod.Path.Wrap("OlympusSkyExitPresentation", function (base, currentRun, exitDoor)
@@ -534,9 +534,53 @@ modutil.mod.Path.Wrap("SetupClockworkGoalReward", function (base, rewardData, cu
 	end
 end)
 
+modutil.mod.Path.Wrap("CreateDoorRewardPreview", function (base, exitDoor, chosenRewardType, chosenLootName, index, args)
+	-- shift the reward preview for Asphodel and Elysium story room when going back to Fields.
+	local yOffsetModifications = {
+		AsphodelBoat01b = 220,
+		ElysiumExitDoor = 50,
+	}
+	local multi_reward_zoffset = 180
+	local elysium_zoffset = 105
+	local elysium_xoffset = 177
+	index = index or 1
+
+	if exitDoor and exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] and exitDoor.Name == "ElysiumExitDoor" and index > 1 then
+		exitDoor.RewardPreviewOffsetZ = exitDoor.RewardPreviewOffsetZ - multi_reward_zoffset - ((-1) ^ (index%2)) * elysium_zoffset * (index - 1)
+		exitDoor.RewardPreviewOffsetX = exitDoor.RewardPreviewOffsetX + (((-1) ^ (index%2)) * elysium_xoffset)*(index - 1)
+	end
+	if exitDoor and yOffsetModifications[exitDoor.Name] and not game.ModsNikkelMHadesBiomesIsModdedRun and not exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] then
+		exitDoor.RewardPreviewOffsetY = (exitDoor.RewardPreviewOffsetY or 0) + yOffsetModifications[exitDoor.Name]
+		exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] = true
+	end
+	return base(exitDoor, chosenRewardType, chosenLootName, index, args)
+end)
+
 if mod.IsZagAvailable then
 	modutil.mod.Path.Wrap("LoadCurrentRoomResources", function (base, ...)
 		game.LoadPackages({ Names = { "ModsNikkelMHadesBiomesGUIOriginal" } })
 		return base(...)
 	end)
 end
+
+function mod.IsChaosForcedValid()
+	if game.CurrentRun.CurrentRoom.RoomSetName == "N" and game.CurrentRun.RoomCountCache.N_Hub and game.CurrentRun.RoomCountCache.N_Hub > 0 then
+		return false
+	end
+	if game.CurrentRun.CurrentRoom.RoomSetName == "H" and game.CurrentRun.BiomeDepthCache > 3 then
+		return false
+	end
+	return true
+end
+
+local newForceSecretDoorRequirements = {
+	{
+		FunctionName = _PLUGIN.guid .. "." .. "IsChaosForcedValid"
+	},
+	{
+		Path = {"CurrentRun", "CurrentRoom", "RoomSetName"},
+		IsNone = {"N_SubRooms", "Q", "Styx"}
+	}
+}
+
+game.ConcatTableValuesIPairs(game.NamedRequirementsData.ForceSecretDoorRequirements, newForceSecretDoorRequirements)
