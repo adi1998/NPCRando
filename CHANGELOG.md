@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.9] - 2026-10-30
+
 - Adjust reward preview offsets when exiting ZJ story rooms in the Fields of Mourning.
 - Block Force Chaos effect from triggering in Ephyra, Summit, Styx and the second half of Fields. Mitigation for Orpheus' Chaos boon.
 
@@ -80,7 +82,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.8...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.9...HEAD
+[0.4.9]: https://github.com/adi1998/NPCRando/compare/0.4.8...0.4.9
 [0.4.8]: https://github.com/adi1998/NPCRando/compare/0.4.7...0.4.8
 [0.4.7]: https://github.com/adi1998/NPCRando/compare/0.4.6...0.4.7
 [0.4.6]: https://github.com/adi1998/NPCRando/compare/0.4.5...0.4.6
