@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.10] - 2026-11-12
+
 - Fix Tartarus(H1) exit door animations being broken.
 
 ## [0.4.9] - 2026-10-30
@@ -84,7 +86,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.9...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.10...HEAD
+[0.4.10]: https://github.com/adi1998/NPCRando/compare/0.4.9...0.4.10
 [0.4.9]: https://github.com/adi1998/NPCRando/compare/0.4.8...0.4.9
 [0.4.8]: https://github.com/adi1998/NPCRando/compare/0.4.7...0.4.8
 [0.4.7]: https://github.com/adi1998/NPCRando/compare/0.4.6...0.4.7
