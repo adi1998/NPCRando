@@ -554,15 +554,15 @@ modutil.mod.Path.Wrap("CreateDoorRewardPreview", function (base, exitDoor, chose
 			exitDoor.RewardPreviewOffsetZ = exitDoor.RewardPreviewOffsetZ - multi_reward_zoffset - ((-1) ^ (index%2)) * elysium_zoffset * (index - 1)
 			exitDoor.RewardPreviewOffsetX = exitDoor.RewardPreviewOffsetX + (((-1) ^ (index%2)) * elysium_xoffset)*(index - 1)
 		end
-		if exitDoor and yOffsetModifications[exitDoor.Name] and not game.ModsNikkelMHadesBiomesIsModdedRun and not exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] then
+		if exitDoor and yOffsetModifications[exitDoor.Name] and not game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun and not exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] then
 			exitDoor.RewardPreviewOffsetY = (exitDoor.RewardPreviewOffsetY or 0) + yOffsetModifications[exitDoor.Name]
 			exitDoor[_PLUGIN.guid .. "AdjustedOffSetY"] = true
 		end
-		if exitDoor and xOffSetModifications[exitDoor.Name] and not game.ModsNikkelMHadesBiomesIsModdedRun and not exitDoor[_PLUGIN.guid .. "AdjustedOffSetX"] then
+		if exitDoor and xOffSetModifications[exitDoor.Name] and not game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun and not exitDoor[_PLUGIN.guid .. "AdjustedOffSetX"] then
 			exitDoor.RewardPreviewOffsetX = (exitDoor.RewardPreviewOffsetX or 0) + xOffSetModifications[exitDoor.Name]
 			exitDoor[_PLUGIN.guid .. "AdjustedOffSetX"] = true
 		end
-		if exitDoor and exitDoor.Name == "TartarusDoor03b" and not game.ModsNikkelMHadesBiomesIsModdedRun then
+		if exitDoor and exitDoor.Name == "TartarusDoor03b" and not game.CurrentRun.ModsNikkelMHadesBiomesIsModdedRun then
 			exitDoor.UnlockedAnimation = "Blank"
 			exitDoor.UnlockedAnimationMetaReward = "Blank"
 		end

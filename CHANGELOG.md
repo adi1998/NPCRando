@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Fix Tartarus(H1) exit door animations being broken.
+
 ## [0.4.9] - 2026-10-30
 
 - Adjust reward preview offsets when exiting ZJ story rooms in the Fields of Mourning.
