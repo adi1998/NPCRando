@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Minor bugfix
+
 ## [0.4.10] - 2026-11-12
 
 - Fix Tartarus(H1) exit door animations being broken.

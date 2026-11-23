@@ -536,7 +536,7 @@ end)
 
 modutil.mod.Path.Wrap("CreateDoorRewardPreview", function (base, exitDoor, chosenRewardType, chosenLootName, index, args)
 	-- shift the reward preview for Asphodel and Elysium story room when going back to Fields.
-	if modutil.mod.IndexArray.Get({"CurrentRun", "CurrentRoom", _PLUGIN.guid .. "CurrentBiome"}, game) then
+	if modutil.mod.IndexArray.Get(game, {"CurrentRun", "CurrentRoom", _PLUGIN.guid .. "CurrentBiome"}) then
 		local yOffsetModifications = {
 			AsphodelBoat01b = 220,
 			ElysiumExitDoor = 50,
