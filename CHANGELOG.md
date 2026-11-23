@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.11] - 2026-11-23
+
 - Minor bugfix
 
 ## [0.4.10] - 2026-11-12
@@ -88,7 +90,8 @@
 
 - First version of the mod
 
-[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.10...HEAD
+[unreleased]: https://github.com/adi1998/NPCRando/compare/0.4.11...HEAD
+[0.4.11]: https://github.com/adi1998/NPCRando/compare/0.4.10...0.4.11
 [0.4.10]: https://github.com/adi1998/NPCRando/compare/0.4.9...0.4.10
 [0.4.9]: https://github.com/adi1998/NPCRando/compare/0.4.8...0.4.9
 [0.4.8]: https://github.com/adi1998/NPCRando/compare/0.4.7...0.4.8
